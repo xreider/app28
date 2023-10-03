@@ -4,6 +4,7 @@ import cls from './Navbar.module.scss';
 import { Button, ButtonTheme } from 'shared/ui/Button/Button';
 import { Modal } from 'shared/ui/Modal/Modal';
 import { useCallback, useState } from 'react';
+import { LoginModal } from 'features/AuthByUsername';
 
 interface NavbarProps {
     className?: string;
@@ -14,19 +15,21 @@ export const Navbar = ({ className }: NavbarProps) => {
 
     const [isAuthModalOpened, setItAuthModalOpened] = useState(false)
 
-    const onToggleModal = useCallback(() => { setItAuthModalOpened(prev => !prev) }, [])
+    const onCloseModal = useCallback(() => { setItAuthModalOpened(prev => !prev) }, [])
 
     return (
         <div className={classNames(cls.Navbar, {}, [className])}>
-            <Button theme={ButtonTheme.CLEAR_INVERTED} className={cls.links}
-                onClick={onToggleModal}
+            <Button
+                theme={ButtonTheme.CLEAR_INVERTED}
+                className={cls.links}
+                onClick={onCloseModal}
             >
                 {t('Войти')}
             </Button>
-
-            <Modal isOpen={isAuthModalOpened} onClose={() => setItAuthModalOpened(false)}>
-                asfasfsf
-            </Modal>
+            <LoginModal
+                isOpen={isAuthModalOpened}
+                onClose={() => setItAuthModalOpened(false)}
+            />
         </div>
     );
 };
